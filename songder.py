@@ -23,12 +23,13 @@ def get_links(pattern,url=''):
     soup = BeautifulSoup(response.data,features="html.parser")
     links = []
     for link in soup.findAll('a', attrs={'href': re.compile(pattern)}):
-        print(link)
+        #print(link)
         #print(link.get('href').get('contents'))
         link_text =  link.get('href')
         print("link_text:",link_text,"url:",url)
         if link_text =='/': continue
         if link_text == url: continue
+        if link.text == 'Parent Directory': continue
         if link_text.endswith('/') :#directory, dig into it
             yield from get_links(pattern,link_text)
         else:
